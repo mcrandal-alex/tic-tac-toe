@@ -6,7 +6,7 @@ It handles the exchange of information between the
 console (View) and gameboard (Model)
 '''
 
-def start_game():
+def start_game() -> None:
     game = TicTacToeModel()
     while game.winner == '':
         # TODO: print board
@@ -19,7 +19,7 @@ def main():
     do_play = True
     while do_play:
         start_game()
-        do_continue = input("Do you wish to play again? (y/n): ")
+        do_continue = input("\nDo you wish to play again? (y/n): ")
         do_player = do_continue == 'y'
 
 if __name__ == "__main__":
