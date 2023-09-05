@@ -14,7 +14,8 @@ class TicTacToeModel():
         self.markers = ['X', 'O']
         self.markers_length = len(self.markers)
         self.marker_index = 0
-        self.winner = ''
+        self.turn_player = self.marker_index + 1
+        self.winner = -1
     
     def mark_spot(self, x: int, y: int) -> int:
         '''Have the player mark a spot on the grid, then have the game check for win
@@ -26,26 +27,27 @@ class TicTacToeModel():
         if self.gameboard[x][y] != '-':
             return -1
         
-        self.gameboard[x][y] = self.turn_player[self.marker_index]
+        self.gameboard[x][y] = self.markers[self.marker_index]
+        if self.check_win():
+            self.winner = self.marker_index + 1
         self.marker_index = (self.marker_index + 1) % self.markers_length
-
-        self.winner = self.check_win()
+        self.turn_player = self.marker_index + 1
     
-    def check_win(self, x: int, y: int) -> str:
+    def check_win(self, x: int, y: int) -> bool:
         '''Exhaustive search the game board for a winner
            Returns: The character token for the player that won, otherwise the empty string'''
         for i in range(self.board_size):
             if self.gameboard[i][0] == self.gameboard[i][1] == self.gameboard[i][2]:
-                return self.gameboard[i][0]
+                return True
         
         for i in range(self.board_size):
             if self.gameboard[0][i] == self.gameboard[1][i] == self.gameboard[2][i]:
-                return self.gameboard[0][i]
+                return True
             
         if self.gameboard[0][0] == self.gameboard[1][1] == self.gameboard[2][2]:
-            return self.gameboard[0][0]
+            return True
         
         if self.gameboard[0][2] == self.gameboard[1][1] == self.gameboard[2][0]:
-            return self.gameboard[0][0]
+            return True
         
-        return ''
+        return False
