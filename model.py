@@ -30,24 +30,38 @@ class TicTacToeModel():
         self.gameboard[x][y] = self.markers[self.marker_index]
         if self.check_win():
             self.winner = self.marker_index + 1
+        
+        if self.check_tie():
+            self.winner = -2
+        
         self.marker_index = (self.marker_index + 1) % self.markers_length
         self.turn_player = self.marker_index + 1
+
+        return 0
     
-    def check_win(self, x: int, y: int) -> bool:
+    def check_win(self) -> bool:
         '''Exhaustive search the game board for a winner
            Returns: The character token for the player that won, otherwise the empty string'''
         for i in range(self.board_size):
-            if self.gameboard[i][0] == self.gameboard[i][1] == self.gameboard[i][2]:
+            if self.gameboard[i][0] == self.gameboard[i][1] == self.gameboard[i][2] == self.markers[self.marker_index]:
                 return True
         
         for i in range(self.board_size):
-            if self.gameboard[0][i] == self.gameboard[1][i] == self.gameboard[2][i]:
+            if self.gameboard[0][i] == self.gameboard[1][i] == self.gameboard[2][i] == self.markers[self.marker_index]:
                 return True
             
-        if self.gameboard[0][0] == self.gameboard[1][1] == self.gameboard[2][2]:
+        if self.gameboard[0][0] == self.gameboard[1][1] == self.gameboard[2][2] == self.markers[self.marker_index]:
             return True
         
-        if self.gameboard[0][2] == self.gameboard[1][1] == self.gameboard[2][0]:
+        if self.gameboard[0][2] == self.gameboard[1][1] == self.gameboard[2][0] == self.markers[self.marker_index]:
             return True
         
         return False
+    
+    def check_tie(self) -> None:
+        for i in range(self.board_size):
+            for j in range(self.board_size):
+                if self.gameboard[i][j] == '-':
+                    return False
+        
+        return True

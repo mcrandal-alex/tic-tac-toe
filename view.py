@@ -9,7 +9,7 @@ class TicTacToeView():
         print_len = len(gameboard)
         print(' \t1\t2\t3')
         for i in range(print_len):
-            print(i, end='\t')
+            print(i + 1, end='\t')
             for j in range(print_len):
                 print(gameboard[i][j], end='\t')
             print('\n')
@@ -19,7 +19,7 @@ class TicTacToeView():
         invalid_input = True
         str_coords = []
         while invalid_input:
-            raw_input = input('Enter a grid cell to mark Player ' + player_id + ' ( ex 1,2 ): ')
+            raw_input = input('Enter a grid cell to mark Player ' + str(player_id) + ' ( ex 1,2 ): ')
             str_coords = raw_input.split(',')
             if len(str_coords) == 2:
                 invalid_input = False
@@ -29,6 +29,6 @@ class TicTacToeView():
         
         int_coords = []
         for str_coord in str_coords:
-            int_coords.push(int(str_coord) - 1)
+            int_coords.append(int(str_coord))
         
         return int_coords
